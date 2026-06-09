@@ -1,169 +1,174 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+/* Reset and Global Setup */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
 }
 
-body{
-    background:#111;
-    color:white;
+body {
+    background-color: #0b0f19;
+    color: #f1f5f9;
+    padding: 40px 20px;
 }
 
-/* Welcome Screen */
-#welcome{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background:linear-gradient(135deg,#000,#222);
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#welcome h1{
-    font-size:4rem;
-    color:#00e5ff;
-    text-shadow:0 0 20px #00e5ff;
+/* Header UI Elements */
+.app-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-#welcome p{
-    margin-top:15px;
+.app-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #3b82f6;
+    letter-spacing: -0.5px;
 }
 
-#startBtn{
-    margin-top:25px;
-    padding:12px 30px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    background:#00e5ff;
-    font-size:18px;
+.app-header .subtitle {
+    color: #94a3b8;
+    margin-top: 8px;
+    font-size: 1.1rem;
 }
 
-#startBtn:hover{
-    transform:scale(1.1);
+.section-title, .gallery-display-section h2 {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
-/* Gallery Page */
-#galleryPage{
-    display:none;
-    padding:20px;
+/* Folder Navigation Matrix grid layout */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
-header{
-    text-align:center;
-    margin-bottom:20px;
+.folder-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-header h1{
-    color:#00e5ff;
+.folder-card:hover {
+    transform: translateY(-4px);
+    background: #273549;
+    border-color: #475569;
 }
 
-.search-box{
-    text-align:center;
-    margin-bottom:20px;
+.folder-icon {
+    font-size: 2.5rem;
+    color: #64748b;
+    margin-bottom: 10px;
+    transition: color 0.25s;
 }
 
-.search-box input{
-    width:300px;
-    padding:10px;
-    border:none;
-    border-radius:5px;
+.folder-card h3 { 
+    font-size: 1.1rem; 
+    color: #f8fafc; 
+    margin-bottom: 4px;
 }
 
-.filters{
-    text-align:center;
-    margin-bottom:20px;
+.folder-card .count { 
+    font-size: 0.8rem; 
+    color: #64748b; 
 }
 
-.filters button{
-    padding:10px 15px;
-    margin:5px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-    background:#00e5ff;
+/* Active Highlight Folder State Configuration */
+.folder-card.active {
+    background: linear-gradient(145deg, #1e3a8a, #172554);
+    border-color: #3b82f6;
+    box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
 }
 
-.gallery{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
+.folder-card.active .folder-icon {
+    color: #3b82f6;
 }
 
-.gallery img{
-    width:100%;
-    height:250px;
-    object-fit:cover;
-    border-radius:10px;
-    cursor:pointer;
-    transition:0.4s;
+.divider {
+    border: 0;
+    height: 1px;
+    background: #1e293b;
+    margin: 40px 0;
 }
 
-.gallery img:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 20px #00e5ff;
+/* Responsive Image Display Grid space */
+.gallery-dense-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
 }
 
-/* Lightbox */
-.lightbox{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.95);
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:999;
+.gallery-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    cursor: pointer;
+    background-color: #1e293b;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 1px solid #1e293b;
 }
 
-.lightbox img{
-    max-width:80%;
-    max-height:80%;
-    border-radius:10px;
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
-.close{
-    position:absolute;
-    top:20px;
-    right:30px;
-    font-size:40px;
-    cursor:pointer;
+.gallery-item:hover img {
+    transform: scale(1.08);
 }
 
-.nav{
-    margin-top:20px;
+/* High Contrast Fullscreen Lightbox Stage UI */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(7, 10, 19, 0.98);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
 }
 
-.nav button{
-    padding:10px 20px;
-    margin:10px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-    background:#00e5ff;
+.view-stage {
+    max-width: 85%;
+    max-height: 80vh;
 }
 
-.counter{
-    margin-top:10px;
-    font-size:18px;
+.view-stage img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 6px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
-@media(max-width:768px){
-
-    #welcome h1{
-        font-size:2.5rem;
-    }
-
-    .search-box input{
-        width:90%;
-    }
-
-    .lightbox img{
-        max-width:95%;
-    }
+.close-trigger {
+    position: absolute; top: 30px; right: 40px;
+    color: #94a3b8; font-size: 45px; cursor: pointer;
+    transition: color 0.2s;
 }
+.close-trigger:hover { color: #f8fafc; }
+
+.nav-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(30, 41, 59, 0.6); border: none; color: white;
+    font-size: 28px; padding: 16px 22px; cursor: pointer; border-radius: 50%;
+    transition: all 0.2s;
+}
+.nav-arrow:hover { background: #3b82f6; color: white; }
+.left { left: 40px; }
+.right { right: 40px; }
