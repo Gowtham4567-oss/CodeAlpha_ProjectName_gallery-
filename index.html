@@ -1,49 +1,74 @@
-<div class="gallery">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Multi-Category Gallery | Gowtham M.S.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-    <!-- Nature -->
-    <img src="images/nature1.jpg" class="nature">
-    <img src="images/nature2.jpg" class="nature">
-    <img src="images/nature3.jpg" class="nature">
-    <img src="images/nature4.jpg" class="nature">
-    <img src="images/nature5.jpg" class="nature">
-    <img src="images/nature6.jpg" class="nature">
-    <img src="images/nature7.jpg" class="nature">
-    <img src="images/nature8.jpg" class="nature">
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Gowtham M.S.</h1>
+            <p class="subtitle">Advanced Industry-Categorized Asset Explorer</p>
+        </header>
 
-    <!-- City -->
-    <img src="images/city1.jpg" class="city">
-    <img src="images/city2.jpg" class="city">
-    <img src="images/city3.jpg" class="city">
-    <img src="images/city4.jpg" class="city">
-    <img src="images/city5.jpg" class="city">
-    <img src="images/city6.jpg" class="city">
-    <img src="images/city7.jpg" class="city">
-    <img src="images/city8.jpg" class="city">
+        <section class="folder-section">
+            <h2 class="section-title">Directories</h2>
+            <div class="folder-grid">
+                <div class="folder-card active" onclick="loadFolder('food', this)">
+                    <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
+                    <h3>Food</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('machine', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Machine</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('nature', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Nature</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('company', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Company</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('medicine', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Medicine</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('actors', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Actors</h3>
+                    <span class="count">4 Items</span>
+                </div>
+            </div>
+        </section>
 
-    <!-- Animals -->
-    <img src="images/animal1.jpg" class="animal">
-    <img src="images/animal2.jpg" class="animal">
-    <img src="images/animal3.jpg" class="animal">
-    <img src="images/animal4.jpg" class="animal">
-    <img src="images/animal5.jpg" class="animal">
-    <img src="images/animal6.jpg" class="animal">
-    <img src="images/animal7.jpg" class="animal">
-    <img src="images/animal8.jpg" class="animal">
+        <hr class="divider">
 
-    <!-- Cars -->
-    <img src="images/car1.jpg" class="car">
-    <img src="images/car2.jpg" class="car">
-    <img src="images/car3.jpg" class="car">
-    <img src="images/car4.jpg" class="car">
-    <img src="images/car5.jpg" class="car">
-    <img src="images/car6.jpg" class="car">
+        <section class="gallery-display-section">
+            <h2 id="current-folder-title">Folder: Food</h2>
+            <div class="gallery-dense-grid" id="imageGrid">
+                </div>
+        </section>
+    </div>
 
-    <!-- Technology -->
-    <img src="images/tech1.jpg" class="tech">
-    <img src="images/tech2.jpg" class="tech">
-    <img src="images/tech3.jpg" class="tech">
-    <img src="images/tech4.jpg" class="tech">
-    <img src="images/tech5.jpg" class="tech">
-    <img src="images/tech6.jpg" class="tech">
+    <div id="lightbox-engine" class="lightbox">
+        <span class="close-trigger" onclick="closeLightbox()">&times;</span>
+        <button class="nav-arrow left" id="prevBtn" onclick="navigateLightbox(-1)">&#10094;</button>
+        <div class="view-stage">
+            <img id="stage-img" src="" alt="Active View">
+        </div>
+        <button class="nav-arrow right" id="nextBtn" onclick="navigateLightbox(1)">&#10095;</button>
+    </div>
 
-</div>
+</body>
+<script src="script.js"></script>
+</html>
