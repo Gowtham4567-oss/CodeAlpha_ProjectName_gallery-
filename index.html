@@ -1,74 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Multi-Category Gallery | Gowtham M.S.</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gowtham M S - Ultimate Gallery</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Gowtham M.S.</h1>
-            <p class="subtitle">Advanced Industry-Categorized Asset Explorer</p>
-        </header>
+<div id="loader">
+    <div class="spinner"></div>
+</div>
 
-        <section class="folder-section">
-            <h2 class="section-title">Directories</h2>
-            <div class="folder-grid">
-                <div class="folder-card active" onclick="loadFolder('food', this)">
-                    <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
-                    <h3>Food</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('machine', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Machine</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('nature', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Nature</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('company', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Company</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('medicine', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Medicine</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('actors', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Actors</h3>
-                    <span class="count">4 Items</span>
-                </div>
-            </div>
-        </section>
+<header>
+    <h1>Gowtham M S</h1>
 
-        <hr class="divider">
-
-        <section class="gallery-display-section">
-            <h2 id="current-folder-title">Folder: Food</h2>
-            <div class="gallery-dense-grid" id="imageGrid">
-                </div>
-        </section>
+    <div class="controls">
+        <button id="themeBtn">🌙 Theme</button>
+        <button id="uploadBtn">📤 Upload</button>
+        <input type="file" id="fileInput" accept="image/*" hidden>
     </div>
+</header>
 
-    <div id="lightbox-engine" class="lightbox">
-        <span class="close-trigger" onclick="closeLightbox()">&times;</span>
-        <button class="nav-arrow left" id="prevBtn" onclick="navigateLightbox(-1)">&#10094;</button>
-        <div class="view-stage">
-            <img id="stage-img" src="" alt="Active View">
-        </div>
-        <button class="nav-arrow right" id="nextBtn" onclick="navigateLightbox(1)">&#10095;</button>
+<div class="filters">
+    <button data-category="food">Food</button>
+    <button data-category="nature">Nature</button>
+    <button data-category="technology">Technology</button>
+    <button data-category="medicine">Medicine</button>
+    <button data-category="company">Company</button>
+    <button data-category="actors">Actors</button>
+</div>
+
+<div id="gallery"></div>
+
+<div id="lightbox">
+    <span id="close">×</span>
+    <img id="lightboxImg">
+
+    <div class="lightbox-buttons">
+        <button id="downloadBtn">⬇ Download</button>
+        <button id="fullscreenBtn">⛶ Fullscreen</button>
+        <button id="favoriteBtn">❤ Favorite</button>
     </div>
+</div>
 
-</body>
 <script src="script.js"></script>
+</body>
 </html>
