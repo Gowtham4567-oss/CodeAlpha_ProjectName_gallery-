@@ -1,102 +1,82 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const galleryItems = document.querySelectorAll(".gallery-item");
-    const filterButtons = document.querySelectorAll(".filter-buttons .btn");
+// Grab key elements
+const grid = document.getElementById('mainGrid');
+const galleryItems = Array.from(grid.querySelectorAll('.gallery-item')); // Array for indexing
+const lightbox = document.getElementById('lightbox-modal');
+const expandedImg = document.getElementById('expanded-img');
+const closeBtn = document.querySelector('.close-btn');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+
+let currentIndex = -1; // State for navigation tracking
+
+// Initialize: Set up click events on all items
+galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+        openLightbox(index);
+    });
+});
+
+// Update the specific contents and dynamic visibility transitions
+function updateContent(index) {
+    currentIndex = index;
+    const targetItem = galleryItems[currentIndex];
+    const newSrc = targetItem.querySelector('img').src;
     
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const lightboxCaption = document.getElementById("lightbox-caption");
-    const closeBtn = document.querySelector(".close-btn");
-    const prevBtn = document.querySelector(".prev-btn");
-    const nextBtn = document.querySelector(".next-btn");
+    // Smoothly update the popup image source reference
+    expandedImg.style.opacity = 0; // Trigger fade out
+    setTimeout(() => {
+        expandedImg.src = newSrc; // Swap image reference
+        expandedImg.style.opacity = 1; // Trigger fade in
+    }, 150); // Small duration delay
+}
 
-    let currentIndex = 0;
-    let visibleItems = [...galleryItems]; // Tracks currently active items after filtering
+function openLightbox(index) {
+    updateContent(index); // Set initial content
+    lightbox.style.display = 'flex'; // Make visible (display trigger)
+    // Small timeout ensures the 'flex' render happens before transition executes
+    setTimeout(() => {
+        lightbox.classList.add('show'); // Apply transition effects (opacity and scaling)
+    }, 10);
+}
 
-    /* ==========================================
-       1. FILTER FEATURE (Bonus Requirement)
-       ========================================== */
-    filterButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            // Remove active style from previous button, add to current
-            document.querySelector(".filter-buttons .active").classList.remove("active");
-            button.classList.add("active");
+function closeLightbox() {
+    lightbox.classList.remove('show'); // Apply hide transitions
+    // Wait for hide transitions to finalize before fully removing element visibility
+    setTimeout(() => {
+        lightbox.style.display = 'none'; // Re-hide from DOM visibility structure
+        expandedImg.src = ''; // Clear image memory leak reference
+    }, 300); // Matches CSS transitions duration balance
+}
 
-            const filterValue = button.getAttribute("data-filter");
+// NAVIGATION ARROW LOGIC FUNCTIONS
+function navigateNext() {
+    let nextIdx = (currentIndex + 1) % galleryItems.length; // Modulo handles wrap-around loops
+    updateContent(nextIdx);
+}
 
-            galleryItems.forEach(item => {
-                if (filterValue === "all" || item.getAttribute("data-category") === filterValue) {
-                    item.classList.remove("hide");
-                } else {
-                    item.classList.add("hide");
-                }
-            });
+function navigatePrev() {
+    let prevIdx = (currentIndex - 1 + galleryItems.length) % galleryItems.length; // Modulo handles wrap-around loops
+    updateContent(prevIdx);
+}
 
-            // Re-update the visible items list for proper Lightbox navigation loops
-            visibleItems = [...galleryItems].filter(item => !item.classList.contains("hide"));
-        });
-    });
+// EVENT LISTENER BINDING
+closeBtn.addEventListener('click', closeLightbox);
+nextBtn.addEventListener('click', navigateNext);
+prevBtn.addEventListener('click', navigatePrev);
 
-    /* ==========================================
-       2. LIGHTBOX & NAVIGATION FEATURE
-       ========================================== */
-    // Open Lightbox
-    galleryItems.forEach(item => {
-        item.addEventListener("click", () => {
-            // Find what index the clicked item is within the *currently visible* items
-            currentIndex = visibleItems.indexOf(item);
-            showLightbox(visibleItems[currentIndex]);
-        });
-    });
-
-    function showLightbox(element) {
-        const imgTarget = element.querySelector("img");
-        const captionTarget = element.querySelector(".caption");
-
-        lightboxImg.src = imgTarget.src;
-        lightboxCaption.textContent = captionTarget.textContent;
-        lightbox.classList.add("show");
+// Close popup if background itself gets directly selected (clicked)
+lightbox.addEventListener('click', (event) => {
+    // Only execute if direct target is the black background overlay panel itself
+    if (event.target === lightbox || event.target.className === 'lb-content-wrapper') {
+        closeLightbox();
     }
+});
 
-    // Close Lightbox
-    closeBtn.addEventListener("click", () => {
-        lightbox.classList.remove("show");
-    });
-
-    // Close Lightbox clicking outside the image container
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) {
-            lightbox.classList.remove("show");
-        }
-    });
-
-    // Next Button Function
-    nextBtn.addEventListener("click", () => {
-        currentIndex++;
-        if (currentIndex >= visibleItems.length) {
-            currentIndex = 0; // Loop back to start
-        }
-        showLightbox(visibleItems[currentIndex]);
-    });
-
-    // Prev Button Function
-    prevBtn.addEventListener("click", () => {
-        currentIndex--;
-        if (currentIndex < 0) {
-            currentIndex = visibleItems.length - 1; // Loop to end
-        }
-        showLightbox(visibleItems[currentIndex]);
-    });
-
-    // Keyboard controls support (Left / Right / Escape keys)
-    document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("show")) return;
-        
-        if (e.key === "ArrowRight") {
-            nextBtn.click();
-        } else if (e.key === "ArrowLeft") {
-            prevBtn.click();
-        } else if (e.key === "Escape") {
-            closeBtn.click();
-        }
-    });
+// Advanced Keyboard Controls for Accessibility
+document.addEventListener('keydown', (event) => {
+    if (lightbox.classList.contains('show')) {
+        if (event.key === 'Escape') closeLightbox();
+        if (event.key === 'ArrowRight') navigateNext();
+        if (event.key === 'ArrowLeft') navigatePrev();
+    }
 });
