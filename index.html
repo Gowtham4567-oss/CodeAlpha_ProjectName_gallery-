@@ -3,63 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Folder Gallery | Gowtham M.S.</title>
+    <title>Gowtham M S - Advanced Image Gallery</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <header class="app-header">
-            <h1>Gowtham M.S.</h1>
-            <p class="subtitle">Data Scientist & AI Engineer | Creative Portfolio</p>
+    <!-- Welcome Screen -->
+    <section id="welcome">
+        <h1>Gowtham M S</h1>
+        <p>Advanced Image Gallery Project</p>
+        <button id="startBtn">Enter Gallery</button>
+    </section>
+
+    <!-- Gallery Page -->
+    <section id="galleryPage">
+
+        <header>
+            <h1>Advanced Image Gallery</h1>
         </header>
 
-        <section class="folder-section">
-            <h2 class="section-title">Select an Asset Folder</h2>
-            <div class="folder-grid">
-                <div class="folder-card active" onclick="loadFolder('nature', this)">
-                    <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
-                    <h3>Nature</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('architecture', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Architecture</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('tech', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>Technology</h3>
-                    <span class="count">4 Items</span>
-                </div>
-                <div class="folder-card" onclick="loadFolder('people', this)">
-                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
-                    <h3>People</h3>
-                    <span class="count">4 Items</span>
-                </div>
-            </div>
-        </section>
-
-        <hr class="divider">
-
-        <section class="gallery-display-section">
-            <h2 id="current-folder-title">Folder: Nature</h2>
-            <div class="gallery-dense-grid" id="imageGrid">
-                </div>
-        </section>
-    </div>
-
-    <div id="lightbox-engine" class="lightbox">
-        <span class="close-trigger" onclick="closeLightbox()">&times;</span>
-        <button class="nav-arrow left" id="prevBtn" onclick="navigateLightbox(-1)">&#10094;</button>
-        <div class="view-stage">
-            <img id="stage-img" src="" alt="Active View">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search Category...">
         </div>
-        <button class="nav-arrow right" id="nextBtn" onclick="navigateLightbox(1)">&#10095;</button>
+
+        <div class="filters">
+            <button onclick="filterImages('all')">All</button>
+            <button onclick="filterImages('nature')">Nature</button>
+            <button onclick="filterImages('city')">City</button>
+            <button onclick="filterImages('animal')">Animals</button>
+        </div>
+
+        <div class="gallery">
+
+            <img src="https://picsum.photos/id/1015/500/400" class="nature">
+            <img src="https://picsum.photos/id/1016/500/400" class="nature">
+            <img src="https://picsum.photos/id/1031/500/400" class="city">
+            <img src="https://picsum.photos/id/1035/500/400" class="city">
+            <img src="https://picsum.photos/id/237/500/400" class="animal">
+            <img src="https://picsum.photos/id/1025/500/400" class="animal">
+
+        </div>
+
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+
+        <span class="close">&times;</span>
+
+        <img id="lightboxImg">
+
+        <div class="nav">
+            <button id="prev">Previous</button>
+            <button id="next">Next</button>
+        </div>
+
+        <div class="counter" id="counter"></div>
+
     </div>
+
+    <script src="script.js"></script>
 
 </body>
-<script src="script.js"></script>
 </html>
