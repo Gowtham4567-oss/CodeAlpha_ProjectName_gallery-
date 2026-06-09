@@ -3,69 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mixed Media Gallery | Gowtham M.S.</title>
+    <title>Advanced Folder Gallery | Gowtham M.S.</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="gallery-wrapper">
-        <header class="gallery-header">
+    <div class="app-container">
+        
+        <header class="app-header">
             <h1>Gowtham M.S.</h1>
-            <p>Diverse Portfolio Gallery</p>
+            <p class="subtitle">Data Scientist & AI Engineer | Creative Portfolio</p>
         </header>
 
-        <div class="gallery-grid" id="mainGrid">
-            <div class="gallery-item" data-type="architecture">
-                <img src="https://picsum.photos/600/400?random=11" alt="Cityscape">
-                <div class="overlay"><span>Structure</span></div>
+        <section class="folder-section">
+            <h2 class="section-title">Select an Asset Folder</h2>
+            <div class="folder-grid">
+                <div class="folder-card active" onclick="loadFolder('nature', this)">
+                    <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
+                    <h3>Nature</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('architecture', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Architecture</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('tech', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>Technology</h3>
+                    <span class="count">4 Items</span>
+                </div>
+                <div class="folder-card" onclick="loadFolder('people', this)">
+                    <div class="folder-icon"><i class="fas fa-folder"></i></div>
+                    <h3>People</h3>
+                    <span class="count">4 Items</span>
+                </div>
             </div>
+        </section>
 
-            <div class="gallery-item" data-type="nature">
-                <img src="https://picsum.photos/600/600?random=12" alt="Mountain Pass">
-                <div class="overlay"><span>Organic</span></div>
-            </div>
+        <hr class="divider">
 
-            <div class="gallery-item" data-type="tech">
-                <img src="https://picsum.photos/400/600?random=13" alt="Abstract Code">
-                <div class="overlay"><span>Digital</span></div>
-            </div>
-
-            <div class="gallery-item" data-type="people">
-                <img src="https://picsum.photos/600/400?random=14" alt="Portrait">
-                <div class="overlay"><span>Culture</span></div>
-            </div>
-
-            <div class="gallery-item" data-type="architecture">
-                <img src="https://picsum.photos/400/800?random=15" alt="Modern Skyscraper">
-                <div class="overlay"><span>Structure</span></div>
-            </div>
-
-            <div class="gallery-item" data-type="nature">
-                <img src="https://picsum.photos/600/400?random=16" alt="Coastline">
-                <div class="overlay"><span>Organic</span></div>
-            </div>
-
-            <div class="gallery-item" data-type="tech">
-                <img src="https://picsum.photos/600/400?random=17" alt="Drone View">
-                <div class="overlay"><span>Digital</span></div>
-            </div>
-
-            <div class="gallery-item" data-type="people">
-                <img src="https://picsum.photos/400/400?random=18" alt="Market Crowd">
-                <div class="overlay"><span>Culture</span></div>
-            </div>
-        </div>
+        <section class="gallery-display-section">
+            <h2 id="current-folder-title">Folder: Nature</h2>
+            <div class="gallery-dense-grid" id="imageGrid">
+                </div>
+        </section>
     </div>
 
-    <div id="lightbox-modal" class="lightbox">
-        <span class="close-btn">&times;</span>
-        <button class="nav-btn prev-btn" id="prev">&#10094;</button>
-        <div class="lb-content-wrapper">
-            <img class="lightbox-img" id="expanded-img" src="" alt="Expanded View">
+    <div id="lightbox-engine" class="lightbox">
+        <span class="close-trigger" onclick="closeLightbox()">&times;</span>
+        <button class="nav-arrow left" id="prevBtn" onclick="navigateLightbox(-1)">&#10094;</button>
+        <div class="view-stage">
+            <img id="stage-img" src="" alt="Active View">
         </div>
-        <button class="nav-btn next-btn" id="next">&#10095;</button>
+        <button class="nav-arrow right" id="nextBtn" onclick="navigateLightbox(1)">&#10095;</button>
     </div>
 
-    <script src="script.js"></script>
 </body>
+<script src="script.js"></script>
 </html>
