@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gowtham M S - Ultimate Gallery</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="loader">
-    <div class="spinner"></div>
-</div>
+    <header>
+        <h1>Interactive Image Gallery</h1>
+        <div class="filter-buttons">
+            <button class="btn active" onclick="filterImages('all')">Show All</button>
+            <button class="btn" onclick="filterImages('nature')">Nature</button>
+            <button class="btn" onclick="filterImages('architecture')">Architecture</button>
+            <button class="btn" onclick="filterImages('animals')">Animals</button>
+        </div>
+    </header>
 
-<header>
-    <h1>Gowtham M S</h1>
+    <main class="gallery-container">
+        <div class="gallery-item nature">
+            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600" alt="Foggy Mountain Landscape" onclick="openLightbox(0)">
+        </div>
+        <div class="gallery-item architecture">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Modern Glass Skyscraper" onclick="openLightbox(1)">
+        </div>
+        <div class="gallery-item animals">
+            <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600" alt="Red Fox Looking Around" onclick="openLightbox(2)">
+        </div>
+        <div class="gallery-item nature">
+            <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600" alt="Forest Footpath" onclick="openLightbox(3)">
+        </div>
+        <div class="gallery-item architecture">
+            <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=600" alt="Suspension Bridge" onclick="openLightbox(4)">
+        </div>
+        <div class="gallery-item animals">
+            <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600" alt="Majestic Lion Portrait" onclick="openLightbox(5)">
+        </div>
+    </main>
 
-    <div class="controls">
-        <button id="themeBtn">🌙 Theme</button>
-        <button id="uploadBtn">📤 Upload</button>
-        <input type="file" id="fileInput" accept="image/*" hidden>
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <button class="nav-btn prev-btn" onclick="changeImage(-1)">&#10094;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div id="lightbox-caption"></div>
+        </div>
+        <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
     </div>
-</header>
 
-<div class="filters">
-    <button data-category="food">Food</button>
-    <button data-category="nature">Nature</button>
-    <button data-category="technology">Technology</button>
-    <button data-category="medicine">Medicine</button>
-    <button data-category="company">Company</button>
-    <button data-category="actors">Actors</button>
-</div>
-
-<div id="gallery"></div>
-
-<div id="lightbox">
-    <span id="close">×</span>
-    <img id="lightboxImg">
-
-    <div class="lightbox-buttons">
-        <button id="downloadBtn">⬇ Download</button>
-        <button id="fullscreenBtn">⛶ Fullscreen</button>
-        <button id="favoriteBtn">❤ Favorite</button>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
