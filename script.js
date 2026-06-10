@@ -1,141 +1,81 @@
-const gallery=document.getElementById("gallery");
-
-const categories=[
-"food",
-"nature",
-"technology",
-"medicine",
-"business",
-"people"
+// Array containing all image details for dynamic indexing
+const images = [
+    { src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800", alt: "Foggy Mountain Landscape" },
+    { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800", alt: "Modern Glass Skyscraper" },
+    { src: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800", alt: "Red Fox Looking Around" },
+    { src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800", alt: "Forest Footpath" },
+    { src: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800", alt: "Suspension Bridge" },
+    { src: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800", alt: "Majestic Lion Portrait" }
 ];
 
-let currentImage="";
+let currentIndex = 0;
 
-function addImages(){
-
-for(let i=0;i<20;i++){
-
-let category=
-categories[Math.floor(Math.random()*categories.length)];
-
-let img=document.createElement("img");
-
-img.src=`https://source.unsplash.com/400x${300+i}/${category}?sig=${Math.random()}`;
-
-img.loading="lazy";
-
-img.onclick=()=>{
-openLightbox(img.src);
-};
-
-gallery.appendChild(img);
-}
+// Open Lightbox
+function openLightbox(index) {
+    currentIndex = index;
+    const lightbox = document.getElementById("lightbox");
+    lightbox.style.display = "flex";
+    updateLightboxImage();
 }
 
-window.addEventListener("load",()=>{
-
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-},1500);
-
-addImages();
-
-});
-
-window.addEventListener("scroll",()=>{
-
-if(window.innerHeight+window.scrollY>=document.body.offsetHeight-100){
-
-addImages();
-
+// Close Lightbox
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
 }
 
-});
-
-function openLightbox(src){
-
-currentImage=src;
-
-document.getElementById("lightbox").style.display="flex";
-
-document.getElementById("lightboxImg").src=src;
+// Next / Previous Navigation Controls
+function changeImage(direction) {
+    currentIndex += direction;
+    
+    // Infinite loop cycling logic
+    if (currentIndex >= images.length) {
+        currentIndex = 0;
+    } else if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+    }
+    
+    updateLightboxImage();
 }
 
-document.getElementById("close").onclick=()=>{
+// Update Lightbox Target Image Content
+function updateLightboxImage() {
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    
+    lightboxImg.src = images[currentIndex].src;
+    lightboxImg.alt = images[currentIndex].alt;
+    lightboxCaption.textContent = images[currentIndex].alt;
+}
 
-document.getElementById("lightbox").style.display="none";
+// Bonus Feature: Filter Image Items by Class Category
+function filterImages(category) {
+    const items = document.querySelectorAll('.gallery-item');
+    const buttons = document.querySelectorAll('.filter-buttons .btn');
+    
+    // Update Active Button Style Status
+    buttons.forEach(btn => {
+        if(btn.textContent.toLowerCase().includes(category)) {
+            btn.classList.add('active');
+        } else if (category === 'all' && btn.textContent.toLowerCase().includes('all')) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
-};
+    // Show/Hide Image Grids based on targeted categories
+    items.forEach(item => {
+        if (category === 'all' || item.classList.contains(category)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
 
-document.getElementById("downloadBtn").onclick=()=>{
-
-const a=document.createElement("a");
-
-a.href=currentImage;
-
-a.download="image.jpg";
-
-a.click();
-
-};
-
-document.getElementById("fullscreenBtn").onclick=()=>{
-
-document.getElementById("lightboxImg").requestFullscreen();
-
-};
-
-document.getElementById("favoriteBtn").onclick=()=>{
-
-let favorites=
-JSON.parse(localStorage.getItem("favorites"))||[];
-
-favorites.push(currentImage);
-
-localStorage.setItem(
-"favorites",
-JSON.stringify(favorites)
-);
-
-alert("Added to Favorites");
-};
-
-document.getElementById("themeBtn").onclick=()=>{
-
-document.body.classList.toggle("light");
-
-};
-
-document.getElementById("uploadBtn").onclick=()=>{
-
-document.getElementById("fileInput").click();
-
-};
-
-document.getElementById("fileInput").addEventListener("change",(e)=>{
-
-const file=e.target.files[0];
-
-if(!file) return;
-
-const reader=new FileReader();
-
-reader.onload=function(ev){
-
-let img=document.createElement("img");
-
-img.src=ev.target.result;
-
-img.onclick=()=>{
-
-openLightbox(img.src);
-
-};
-
-gallery.prepend(img);
-
-};
-
-reader.readAsDataURL(file);
-
+// Close modal instantly if user clicks anywhere outside the main focus image
+document.getElementById("lightbox").addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeLightbox();
+    }
 });
